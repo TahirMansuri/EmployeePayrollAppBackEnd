@@ -22,7 +22,7 @@ public class EmployeePayrollController {
      *
      * @return Reponse Entity with HttpStatus Code
      */
-    @RequestMapping(value={"","/","get"})
+    @RequestMapping(value={"","/","/get"})
     public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
         List<EmployeePayrollData> employeePayrollDataList = null;
         employeePayrollDataList = employeePayrollService.getEmployeePayrollData();
@@ -67,7 +67,7 @@ public class EmployeePayrollController {
     @PutMapping("/update")
     public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = employeePayrollService.updateEmployeePayrollData(employeePayrollDTO)
+        employeePayrollData = employeePayrollService.updateEmployeePayrollData(employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Update Call for Employee ID Successful",employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
