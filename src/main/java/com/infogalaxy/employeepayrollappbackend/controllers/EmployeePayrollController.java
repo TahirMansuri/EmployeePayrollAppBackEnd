@@ -82,9 +82,18 @@ public class EmployeePayrollController {
     public ResponseEntity<String> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
         employeePayrollService.deleteEmployeePayrollData(empId);
         return new ResponseEntity<String>("Delete Call for Emp ID is Success",HttpStatus.OK);
-//        EmployeePayrollData employeePayrollData = null;
-//        employeePayrollData = new EmployeePayrollData(empId,new EmployeePayrollDTO());
-//        ResponseDTO responseDTO = new ResponseDTO("Delete Call for Emp ID is Successful",employeePayrollData);
-//        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+    }
+
+    /***
+     * Method to get Employee List by Department (Custom Query defined in repository interface)
+     * @param department
+     * @return
+     */
+    @GetMapping("/department/{department}")
+    public ResponseEntity<ResponseDTO> getEmpByDepartment(@PathVariable("department") String department) {
+        List<EmployeePayrollData> employeePayrollDataList = null;
+        employeePayrollDataList = employeePayrollService.findEmployeePayrollDataByDepartment(department);
+        ResponseDTO responseDTO = new ResponseDTO("Call for Get Department Success",employeePayrollDataList);
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 }

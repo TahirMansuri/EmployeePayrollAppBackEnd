@@ -41,4 +41,10 @@ public interface IEmployeePayrollService {
      */
     void deleteEmployeePayrollData(long empId);
 
+    /***
+     * Custom Method for getting employee by department (also defined custome query in repository interface)
+     * @param department
+     * @return
+     */
+    List<EmployeePayrollData> findEmployeePayrollDataByDepartment(String department);
 }

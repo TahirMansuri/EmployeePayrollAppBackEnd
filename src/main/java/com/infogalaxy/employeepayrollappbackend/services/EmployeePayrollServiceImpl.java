@@ -73,4 +73,16 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
         EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empId);
         employeePayrollRepository.delete(employeePayrollData);
     }
+
+    /***
+     * Service method to get employee data by department using custom query defined in repository interface
+     * @param department
+     * @return
+     */
+    @Override
+    public List<EmployeePayrollData> findEmployeePayrollDataByDepartment(String department) {
+        return employeePayrollRepository.findEmployeePayrollDataByDepartment(department);
+    }
+
+
 }

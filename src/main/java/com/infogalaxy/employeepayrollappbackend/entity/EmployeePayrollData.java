@@ -15,7 +15,7 @@ import java.util.List;
 public class EmployeePayrollData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name="emp_id")
     private long id;
     private String name;
     private long salary;
