@@ -18,7 +18,7 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
         List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
-        employeePayrollDataList.add(new EmployeePayrollData(1,new EmployeePayrollDTO("Tahir",10000)));
+        employeePayrollDataList.add(new EmployeePayrollData(1,new EmployeePayrollDTO("Tahir",10000,"Male","11 Sept 2021","Best Work","pic.jpg",));
         return employeePayrollDataList;
     }
 
