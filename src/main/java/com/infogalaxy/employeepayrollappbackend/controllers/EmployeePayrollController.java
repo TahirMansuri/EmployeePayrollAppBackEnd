@@ -65,10 +65,10 @@ public class EmployeePayrollController {
      * @param employeePayrollDTO
      * @return ResponseEntity String
      */
-    @PutMapping("/update")
-    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDTO) {
+    @PutMapping("/update/{empId}")
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") long empId,@RequestBody EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = employeePayrollService.updateEmployeePayrollData(employeePayrollDTO);
+        employeePayrollData = employeePayrollService.updateEmployeePayrollData(empId,employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Update Call for Employee ID Successful",employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
@@ -79,10 +79,12 @@ public class EmployeePayrollController {
      * @return ResponseEntity
      */
     @DeleteMapping("/delete/{empId}")
-    public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(empId,new EmployeePayrollDTO());
-        ResponseDTO responseDTO = new ResponseDTO("Delete Call for Emp ID is Successful",employeePayrollData);
-        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+    public ResponseEntity<String> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
+        employeePayrollService.deleteEmployeePayrollData(empId);
+        return new ResponseEntity<String>("Delete Call for Emp ID is Success",HttpStatus.OK);
+//        EmployeePayrollData employeePayrollData = null;
+//        employeePayrollData = new EmployeePayrollData(empId,new EmployeePayrollDTO());
+//        ResponseDTO responseDTO = new ResponseDTO("Delete Call for Emp ID is Successful",employeePayrollData);
+//        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 }

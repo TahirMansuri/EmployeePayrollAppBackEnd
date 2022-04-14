@@ -3,13 +3,20 @@ package com.infogalaxy.employeepayrollappbackend.services;
 import com.infogalaxy.employeepayrollappbackend.dto.EmployeePayrollDTO;
 import com.infogalaxy.employeepayrollappbackend.entity.EmployeePayrollData;
 import com.infogalaxy.employeepayrollappbackend.exceptions.EmployeePayrollException;
+import com.infogalaxy.employeepayrollappbackend.repository.EmployeePayrollRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
+
+    @Autowired
+    EmployeePayrollRepository employeePayrollRepository;
 
     /***
      * Service method to get all employee data
@@ -17,9 +24,7 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
      */
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
-        List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
-        employeePayrollDataList.add(new EmployeePayrollData(1,new EmployeePayrollDTO("Tahir",10000,"Male","11 Sept 2021","Best Work","pic.jpg",));
-        return employeePayrollDataList;
+        return employeePayrollRepository.findAll();
     }
 
     /***
@@ -29,13 +34,9 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
      */
     @Override
     public EmployeePayrollData getEmployeePayrollDataById(long empId) {
-        EmployeePayrollData employeePayrollData = null;
-        if(empId == 1) {
-            employeePayrollData = new EmployeePayrollData(1,new EmployeePayrollDTO("Tahir",10000));
-            return employeePayrollData;
-        } else {
-            throw  new EmployeePayrollException("Employee with Given ID Not Found.");
-        }
+        return employeePayrollRepository
+                .findById(empId)
+                .orElseThrow(() -> new EmployeePayrollException("Employee with given ID not Found"));
     }
 
     /***
@@ -46,8 +47,9 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(1, employeePayrollDTO);
-        return employeePayrollData;
+        employeePayrollData = new EmployeePayrollData(employeePayrollDTO);
+        log.info("Employee Data Saved");
+        return employeePayrollRepository.save(employeePayrollData);
     }
 
     /***
@@ -56,14 +58,19 @@ public class EmployeePayrollServiceImpl implements IEmployeePayrollService{
      * @return employeePayrollData
      */
     @Override
-    public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(1,employeePayrollDTO);
-        return employeePayrollData;
+    public EmployeePayrollData updateEmployeePayrollData(long empId,EmployeePayrollDTO employeePayrollDTO) {
+        EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empId);
+        employeePayrollData.updateEmployeePayrollData(employeePayrollDTO);
+        return employeePayrollRepository.save(employeePayrollData);
     }
 
+    /***
+     * Service method to Delete Employee by Id
+     * @param empId
+     */
     @Override
     public void deleteEmployeePayrollData(long empId) {
-
+        EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empId);
+        employeePayrollRepository.delete(employeePayrollData);
     }
 }

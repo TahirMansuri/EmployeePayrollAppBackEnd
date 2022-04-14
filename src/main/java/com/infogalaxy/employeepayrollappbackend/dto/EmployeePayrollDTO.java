@@ -27,20 +27,35 @@ public class EmployeePayrollDTO {
     @Min(value = 5000, message = "Salary must be more than 5000")
     public long salary;
 
+    /***
+     * Using Pattern for User Selection only for Male and Female Values
+     */
     @Pattern(regexp = "Male|Female",message = "Gender must be Male or Female")
     public String gender;
 
+    /***
+     * Applying Date Format using @JsonFormat Validation along with @PastOrPresent check
+     */
     @JsonFormat(pattern = "dd MMM yyyy")
     @NotNull(message = "Start Date Should not be empty")
     @PastOrPresent(message = "Start Date should be Past or Present Date")
     public LocalDate startDate;
 
+    /***
+     * Validation for Note
+     */
     @NotBlank(message = "Notes should not be empty.")
     public String note;
 
+    /***
+     * @NotBlank Validation for profilePic
+     */
     @NotBlank(message = "Profile Pic should not be blank.")
     public String profilePic;
 
+    /***
+     * Using List for Handling Multiple Department Values
+     */
     @NotNull(message = "Department Cannot be empty.")
     public List<String> department;
 }
