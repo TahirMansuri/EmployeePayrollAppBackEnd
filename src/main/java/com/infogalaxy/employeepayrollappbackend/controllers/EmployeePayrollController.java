@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
@@ -23,12 +23,20 @@ public class EmployeePayrollController {
      *
      * @return Reponse Entity with HttpStatus Code
      */
+//    @RequestMapping(value={"","/","/get"})
+//    public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
+//        List<EmployeePayrollData> employeePayrollDataList = null;
+//        employeePayrollDataList = employeePayrollService.getEmployeePayrollData();
+//        ResponseDTO responseDTO = new ResponseDTO("Get Call for ID Successful",employeePayrollDataList);
+//        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+//    }
     @RequestMapping(value={"","/","/get"})
-    public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
+    public List<EmployeePayrollData> getEmployeePayrollData() {
         List<EmployeePayrollData> employeePayrollDataList = null;
         employeePayrollDataList = employeePayrollService.getEmployeePayrollData();
         ResponseDTO responseDTO = new ResponseDTO("Get Call for ID Successful",employeePayrollDataList);
-        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+        //return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+        return employeePayrollDataList;
     }
 
     /***
@@ -51,12 +59,21 @@ public class EmployeePayrollController {
      * @param employeePayrollDTO
      * @return ResponseEntity String
      */
+//    @PostMapping("/create")
+//    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) {
+//        EmployeePayrollData employeePayrollData = null;
+//        employeePayrollData = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
+//        ResponseDTO responseDTO = new ResponseDTO("Create Call for ID Successful", employeePayrollData);
+//        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+//    }
+
     @PostMapping("/create")
-    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) {
+    public String addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
         employeePayrollData = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Create Call for ID Successful", employeePayrollData);
-        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+        //return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+        return "Employee Added";
     }
 
     /***
